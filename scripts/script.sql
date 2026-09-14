@@ -6,6 +6,9 @@ create table AppState
     state             text null
 );
 
+create index idx_appstate_lookup
+    on AppState (state(128), details(128));
+
 create table Application
 (
     auto_app_id int auto_increment
@@ -74,8 +77,8 @@ create table Activity
         foreign key (auto_type_id) references Type (auto_type_id)
 );
 
-create index auto_app_id
-    on Activity (auto_app_id);
+create index idx_activity_app_user
+    on Activity (auto_app_id, auto_user_id);
 
 create index auto_app_state_id
     on Activity (auto_app_state_id);
